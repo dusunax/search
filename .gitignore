@@ -110,3 +110,6 @@ typings/
 
 # local api call test file
 local.test/*
+
+# Prisma
+/prisma/migrations
