@@ -2,24 +2,28 @@ import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import { v4 } from 'uuid';
 
-import { PrismaService } from './prisma/prisma.service';
-import type { PrismaTxType } from './prisma/prisma.type';
+import { PrismaService } from '@/prisma/prisma.service';
+import type { PrismaTxType } from '@/prisma/prisma.type';
 
 @Injectable()
 export class SearchRepository {
     constructor(private readonly prisma: PrismaService) {}
 
     upsert(keyword: string, tx?: PrismaTxType) {
-        return (tx ?? this.prisma).searchKeyword
-            .upsert({
-                where: { keyword },
-                update: {},
-                create: { id: v4(), keyword, searchCount: 1, version: 0 },
-            } satisfies Prisma.SearchKeywordUpsertArgs)
-            .then(({ id, version }) => ({
-                id,
-                version,
-            }));
+        return (
+            (tx ?? this.prisma).searchKeyword
+                // tx: Prisma transaction instance
+                // $transaction https://www.prisma.io/docs/orm/prisma-client/queries/transactions
+                .upsert({
+                    where: { keyword },
+                    update: {},
+                    create: { id: v4(), keyword, searchCount: 1, version: 0 },
+                } satisfies Prisma.SearchKeywordUpsertArgs)
+                .then(({ id, version }) => ({
+                    id,
+                    version,
+                }))
+        );
     }
 
     increaseSearchCount(

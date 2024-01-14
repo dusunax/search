@@ -1,8 +1,10 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
 import type { Search } from './search.interface';
+import { KeywordApiProperty } from '@/swagger/swagger.decorator';
 
 class SearchRequestDto {
+    @KeywordApiProperty()
     @IsNotEmpty()
     @IsString()
     keyword: string;

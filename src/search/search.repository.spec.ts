@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { PrismaModule } from './prisma/prisma.module';
+import { PrismaModule } from '@/prisma/prisma.module';
 import { SearchRepository } from './search.repository';
 
 describe('SearchRepository Test', () => {

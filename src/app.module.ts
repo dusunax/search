@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 
-import { PrismaModule } from './prisma/prisma.module';
-import { SearchController } from './seach.controller';
-import { SearchService } from './search.service';
-import { SearchRepository } from './search.repository';
+import { PrismaModule } from '@/prisma/prisma.module';
+import { SearchController } from '@/search/seach.controller';
+import { SearchService } from '@/search/search.service';
+import { SearchRepository } from '@/search/search.repository';
 
 @Module({
     imports: [PrismaModule],

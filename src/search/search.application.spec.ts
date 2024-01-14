@@ -1,13 +1,16 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
-import { PrismaModule } from './prisma/prisma.module';
+import { PrismaModule } from '@/prisma/prisma.module';
+import { PrismaService } from '@/prisma/prisma.service';
 import { SearchRepository } from './search.repository';
 import { SearchService } from './search.service';
 import { SearchResponseDto } from './search.dto';
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 describe('SearchService Test', () => {
     let searchService: SearchService;
+    let searchRepository: SearchRepository;
+    let prismaService: PrismaService;
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
@@ -16,20 +19,26 @@ describe('SearchService Test', () => {
         }).compile();
 
         searchService = module.get<SearchService>(SearchService);
+        searchRepository = module.get<SearchRepository>(SearchRepository);
+        prismaService = module.get<PrismaService>(PrismaService);
     });
 
     it('create search when keyword is not exists', async () => {
-        const actual = await searchService.save('4dbbb95d');
+        const existingKeyword = '4dbbb95d';
+        await prismaService.searchKeyword.deleteMany(); // Clear the database state for the test
+
+        const actual = await searchService.save(existingKeyword);
 
         expect(actual).toStrictEqual(
             SearchResponseDto.of({
-                keyword: '4dbbb95d',
+                keyword: existingKeyword,
                 searchCount: 2,
             }),
         );
     });
 
     it('increase seachCount when keyword is exists', async () => {
+        await prismaService.searchKeyword.deleteMany();
         await searchService.save('fbc63d43');
         const actual = await searchService.save('fbc63d43');
 
