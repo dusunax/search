@@ -1,11 +1,11 @@
 datasource db {
-  //in production, you **must** use .env
-  url      = "postgresql://root:root@localhost:5432/search"
   provider = "postgresql"
+  url      = "postgresql://root:root@localhost:5432/search"
 }
 
 generator client {
   provider = "prisma-client-js"
+  binaryTargets = ["native", "linux-arm64-openssl-3.0.x"]
 }
 
 model SearchKeyword {
