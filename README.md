@@ -17,7 +17,9 @@
 
 ## Search
 
-#### [Class Search](https://github.com/dusunax/search/blob/main/src/search.dto.ts)
+### 주요 코드 링크
+
+#### [`Class Search`](https://github.com/dusunax/search/blob/main/src/search/search.dto.ts)
 
 -   keyword와 searchCount 프로퍼티를 가진 Search 객체,
 -   `of(search: Search)`: 정적 메서드, `SearchResponseDto`의 인스턴스를 생성해 반환
