@@ -10,5 +10,5 @@ export const KeywordApiProperty = () =>
     ApiProperty({
         name: 'keyword',
         description: 'Search keyword 📝 ',
-        example: { keyword: 'example-value' },
+        example: 'example-value',
     });
