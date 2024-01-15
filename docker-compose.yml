@@ -2,6 +2,7 @@ version: '3'
 services:
     db:
         image: postgres
+        container_name: db
         restart: always
         env_file:
             - .env
@@ -21,6 +22,8 @@ services:
             - '3000:3000'
         networks:
             - nest_networks
+        depends_on:
+            - db
 
 networks:
     nest_networks:
